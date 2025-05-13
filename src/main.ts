@@ -1,0 +1,23 @@
+import { ValidationPipe } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }));
+
+  // Configuración Swagger
+  const config = new DocumentBuilder()
+    .setTitle('API datingApp')
+    .setDescription('Documentación de la API RESTful')
+    .setVersion('1.0')
+    .addBearerAuth() // Para tokens JWT
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document); // URL: /api
+
+  await app.listen(3000);
+}
+bootstrap();

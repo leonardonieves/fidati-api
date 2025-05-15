@@ -12,7 +12,13 @@ async function bootstrap() {
     .setTitle('API datingApp')
     .setDescription('Documentación de la API RESTful')
     .setVersion('1.0')
-    .addBearerAuth() // Para tokens JWT
+    .addBearerAuth({
+      type: 'http',
+      scheme: 'bearer',
+      bearerFormat: 'JWT',
+      name: 'Authorization',
+      in: 'header',
+    }, 'auth0')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

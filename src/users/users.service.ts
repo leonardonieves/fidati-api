@@ -29,4 +29,12 @@ export class UsersService {
   remove(id: number) {
     return this.userModel.findByIdAndDelete(id).exec();
   }
+
+  async findByEmail(email: string): Promise<UserDocument | null> {
+    return this.userModel.findOne({ email }).exec();
+  }
+  
+  async findByAuth0Id(auth0Id: string): Promise<UserDocument | null> {
+    return this.userModel.findOne({ auth0Id }).exec();
+  }
 }

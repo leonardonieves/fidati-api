@@ -1,18 +1,69 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsOptional, IsString, IsNumber } from 'class-validator';
+import {
+  IsEmail,
+  IsOptional,
+  IsString,
+  IsEnum,
+  IsDateString,
+  ValidateIf,
+  IsNotEmpty,
+} from 'class-validator';
+
+// export enum UserRole {
+//   ADMIN = 'admin',
+//   BASIC = 'basic',
+//   PREMIUM = 'premium',
+// }
+
+export enum Gender {
+  MALE = 'male',
+  FEMALE = 'female',
+  OTHER = 'other',
+}
 
 export class CreateUserDto {
-  @IsNotEmpty()
   @IsString()
-  @ApiProperty({ example: 'Juan Pérez' })
-  name: string;
-
   @IsNotEmpty()
+  auth0Id: string;
+
   @IsEmail()
-  @ApiProperty({ example: 'juan@gmail.com' })
   email: string;
 
   @IsOptional()
-  @IsNumber()
-  age?: number;
+  @IsString()
+  name?: string;
+
+  @IsOptional()
+  @IsString()
+  phoneCode?: string;
+
+  @IsOptional()
+  @IsString()
+  phoneNumber?: string;
+
+  @IsOptional()
+  @IsEnum(Gender)
+  gender?: Gender;
+
+  @IsOptional()
+  @IsDateString()
+  birthDate?: string;
+
+  @IsOptional()
+  @IsString()
+  preferences?: string;
+
+  @IsOptional()
+  @IsString()
+  bio?: string;
+
+  @IsOptional()
+  @IsString()
+  avatarUrl?: string;
+
+  @IsOptional()
+  @IsString()
+  location?: string;
+
+  @IsString()
+  role: string;
 }
